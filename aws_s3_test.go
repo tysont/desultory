@@ -24,7 +24,7 @@ func TestCreateWriteReadDeleteAwsS3Bucket(t *testing.T) {
 		assert.NoError(err)
 		assert.NotNil(ts)
 		assert.NotEmpty(ts)
-		assert.Equal(stack, ts[AwsStackKey])
+		assert.Equal(stack, ts[awsStackKey])
 		k := "test.txt"
 		v := "multiply, world!"
 		err = WriteToAwsS3Bucket(sess, bn, k, []byte(v), stack)

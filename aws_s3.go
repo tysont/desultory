@@ -194,7 +194,7 @@ func ListAwsS3Buckets(sess *session.Session, stack string) ([]string, error) {
 			return bs, err
 			*/
 		}
-		if ts[AwsStackKey] == stack {
+		if ts[awsStackKey] == stack {
 			bs = append(bs, bn)
 		}
 	}

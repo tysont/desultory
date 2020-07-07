@@ -8,26 +8,38 @@ import (
 	"strings"
 )
 
-const Prefix = "desultory-"
-const AwsStackKey = Prefix + "stack"
+var awsResourcePrefix = "desultory-"
+var awsStackKey = awsResourcePrefix + "stack"
+var awsRegion = "us-west-2"
+
+func SetAwsResourcePrefix(prefix string) {
+	awsResourcePrefix = prefix
+}
+
+func SetAwsStackKey(key string) {
+	awsStackKey = key
+}
+
+func SetAwsRegion(region string) {
+	awsRegion = region
+}
 
 func GetAwsSession() (*session.Session, error) {
-	region := "us-west-2"
 	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String(region)},
+		Region: aws.String(awsRegion)},
 	)
 	return sess, err
 }
 
 func getAwsStackTagKeyValue(stack string) (string, string) {
-	return AwsStackKey, stack
+	return awsStackKey, stack
 }
 
 func GetAwsResourcePath(resourceName string, resourceSuffix string, stack string) (string, error) {
 	if strings.Contains(resourceName, "-") {
 		return "", fmt.Errorf("resource name '%v' contains a dash, which is not supported", resourceName)
 	}
-	s := Prefix + resourceName + "-" + stack + resourceSuffix
+	s := awsResourcePrefix + resourceName + "-" + stack + resourceSuffix
 	if len(s) > 64 {
 		return "", fmt.Errorf("implied resource path '%v' exceeds the 64 character limit", s)
 	}
@@ -35,7 +47,7 @@ func GetAwsResourcePath(resourceName string, resourceSuffix string, stack string
 }
 
 func GetAwsResourceNameFromPath(resourcePath string, resourceSuffix string, stack string) (string, error) {
-	s := strings.Replace(resourcePath, Prefix, "", 1)
+	s := strings.Replace(resourcePath, awsResourcePrefix, "", 1)
 	s = strings.Replace(s, "-" + stack + resourceSuffix, "", 1)
 	if strings.Contains(s, "-") {
 		return "", fmt.Errorf("implied resource name '%v' contains a dash, which is not supported", s)

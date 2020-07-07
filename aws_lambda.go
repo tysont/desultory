@@ -117,7 +117,7 @@ func CreateAwsLambdaFunction(sess *session.Session, functionName string, functio
 	}
 	arn := *res.FunctionArn
 	ts := make(map[string]*string, 0)
-	ts[AwsStackKey] = aws.String(stack)
+	ts[awsStackKey] = aws.String(stack)
 	tri := &lambda.TagResourceInput{
 		Resource: aws.String(arn),
 		Tags:     ts,

@@ -230,7 +230,7 @@ func ListAwsIamRoles(sess *session.Session, stack string) ([]string, error) {
 			return rs, err
 			*/
 		}
-		if ts[AwsStackKey] == stack {
+		if ts[awsStackKey] == stack {
 			rs = append(rs, rn)
 		}
 	}
