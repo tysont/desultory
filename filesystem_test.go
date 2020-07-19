@@ -60,13 +60,13 @@ func TestSerializeDeserializeObject(t *testing.T) {
 	tp, err := getTestDirectory()
 	assert.NoError(err)
 	f := "foo.yml"
-	o := &testStruct {
+	o := &TestStruct{
 		Text: "ok computer",
 		Number: 42,
 	}
 	err = SerializeObject(o, f, tp)
 	assert.NoError(err)
-	p := &testStruct {}
+	p := &TestStruct{}
 	err = DeserializeObject(p, f, tp)
 	assert.NoError(err)
 	assert.Equal(o.Text, p.Text)

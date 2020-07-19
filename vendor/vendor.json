@@ -355,6 +355,18 @@
 			"revisionTime": "2018-08-30T19:11:22Z"
 		},
 		{
+			"checksumSHA1": "0M5zm5SY28WfQvu/v0MVvmou8yk=",
+			"path": "github.com/fauna/faunadb-go",
+			"revision": "d9ae20586d2981c55e3ae262bfd6a419bed9ce10",
+			"revisionTime": "2020-07-10T16:58:38Z"
+		},
+		{
+			"checksumSHA1": "oxelbbEeuW5yodNON3KIMcoDEHQ=",
+			"path": "github.com/fauna/faunadb-go/faunadb",
+			"revision": "d9ae20586d2981c55e3ae262bfd6a419bed9ce10",
+			"revisionTime": "2020-07-10T16:58:38Z"
+		},
+		{
 			"checksumSHA1": "Wkz0t6/rOnVz5jvdGNyY9WdUXhU=",
 			"path": "github.com/fsnotify/fsnotify",
 			"revision": "45d7d09e39ef4ac08d493309fa031790c15bfe8a",

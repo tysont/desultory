@@ -13,7 +13,7 @@ import (
 
 var offlineEnvironmentVariable = "OFFLINE"
 
-type testStruct struct {
+type TestStruct struct {
 	Text string
 	Number int
 }
