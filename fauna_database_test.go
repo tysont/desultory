@@ -32,14 +32,15 @@ func TestCreateUpdateGetDeleteFaunaDatabase(t *testing.T) {
 	}
 	err = CreateFaunaInstance(db, cn, ts2)
 	assert.NoError(err)
-	ts1.Number = nm * 2
+	nn := nm * 2
+	ts1.Number = nn
 	err = UpdateFaunaInstance(db, in, txt, ts1)
 	assert.NoError(err)
 	ts := &TestStruct{}
 	err = GetFaunaInstance(db, in, txt, ts)
 	assert.NoError(err)
 	assert.Equal(txt, ts.Text)
-	assert.Equal(nm, ts.Number * 2)
+	assert.Equal(nn, ts.Number)
 	err = DeleteFaunaIndex(db, in)
 	assert.NoError(err)
 	err = DeleteFaunaCollection(db, cn)
