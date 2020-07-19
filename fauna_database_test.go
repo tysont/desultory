@@ -44,22 +44,4 @@ func TestCreateUpdateGetDeleteFaunaDatabase(t *testing.T) {
 	assert.NoError(err)
 	err = DeleteFaunaCollection(db, cn)
 	assert.NoError(err)
-
-	/*
-	bn := GetUniqueString(6)
-	_, err = CreateAwsS3Bucket(sess, bn, sn)
-	assert.NoError(err)
-	f := noosly.CreateFeed("www.stackoverflow.com")
-	k := f.GetKey()
-	b, err := json.Marshal(f)
-	assert.NoError(err)
-	err = WriteToAwsS3Bucket(sess, bn, k, b, sn)
-	assert.NoError(err)
-	b2, err := ReadFromAwsS3Bucket(sess, bn, k, sn)
-	f2 := new(noosly.Feed)
-	err = json.Unmarshal(b2, f2)
-	assert.NoError(err)
-	assert.NotNil(f2)
-	assert.Equal(f.Url, f2.Url)
-	*/
 }
