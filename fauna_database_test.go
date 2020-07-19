@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestCreatePutGetDeleteFaunaDatabase(t *testing.T) {
+func TestCreateUpdateGetDeleteFaunaDatabase(t *testing.T) {
 	assert := assert.New(t)
 	sn := GetUniqueString(6)
 	db := "entity-" + sn
@@ -28,15 +28,18 @@ func TestCreatePutGetDeleteFaunaDatabase(t *testing.T) {
 	err = CreateFaunaInstance(db, cn, ts1)
 	ts2 := &TestStruct{
 		Text: "bar",
-		Number: 14,
+		Number: 9,
 	}
 	err = CreateFaunaInstance(db, cn, ts2)
+	assert.NoError(err)
+	ts1.Number = nm * 2
+	err = UpdateFaunaInstance(db, in, txt, ts1)
 	assert.NoError(err)
 	ts := &TestStruct{}
 	err = GetFaunaInstance(db, in, txt, ts)
 	assert.NoError(err)
 	assert.Equal(txt, ts.Text)
-	assert.Equal(nm, ts.Number)
+	assert.Equal(nm, ts.Number * 2)
 	err = DeleteFaunaIndex(db, in)
 	assert.NoError(err)
 	err = DeleteFaunaCollection(db, cn)

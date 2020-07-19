@@ -1,7 +1,6 @@
 package desultory
 
 import (
-	"fmt"
 	f "github.com/fauna/faunadb-go/faunadb"
 )
 
@@ -23,13 +22,15 @@ func CreateFaunaDatabase(database string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(res)
 	var key string
 	res.At(f.ObjKey("secret")).Get(&key)
 	client := faunaRootClient.NewSessionClient(key)
 	faunaDatabaseClients[database] = client
 	var ref *f.RefV
-	res.At(f.ObjKey("ref")).Get(&ref)
+	err = res.At(f.ObjKey("ref")).Get(&ref)
+	if err != nil {
+		return err
+	}
 	faunaDatabaseKeyReferences[database] = ref
 	return nil
 }
@@ -109,6 +110,26 @@ func CreateFaunaInstance(database string, collection string, o interface{}) erro
 	return err
 }
 
+func UpdateFaunaInstance(database string, index string, pkval string, o interface{}) error {
+	client := faunaDatabaseClients[database]
+	res, err := client.Query(
+		f.Get(
+			f.MatchTerm(f.Index(index), pkval)))
+	if err != nil {
+		return err
+	}
+	var ref *f.RefV
+	err = res.At(f.ObjKey("ref")).Get(&ref)
+	if err != nil {
+		return err
+	}
+	_, err = client.Query(
+		f.Update(
+			f.Ref(ref),
+			f.Obj{"data": o}))
+	return err
+}
+
 func GetFaunaInstance(database string, index string, pkval string, o interface{}) error {
 	client := faunaDatabaseClients[database]
 	res, err := client.Query(
@@ -119,4 +140,3 @@ func GetFaunaInstance(database string, index string, pkval string, o interface{}
 	}
 	return res.At(f.ObjKey("data")).Get(o)
 }
-
