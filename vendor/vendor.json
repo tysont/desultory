@@ -321,6 +321,12 @@
 			"revisionTime": "2020-04-08T18:29:31Z"
 		},
 		{
+			"checksumSHA1": "j+FZ/1nX1GbFB1Ye25FMANBE3Wo=",
+			"path": "github.com/aws/aws-sdk-go/service/sqs",
+			"revision": "dd92eb1a09c318d4b8a165f77b7dd422fd1067cf",
+			"revisionTime": "2020-07-17T18:11:52Z"
+		},
+		{
 			"checksumSHA1": "xzni62bGGxKgIARdfb6BZ9HpZxY=",
 			"path": "github.com/aws/aws-sdk-go/service/sts",
 			"revision": "29ad100f6b7acd1254f8a3ac6c3d2955488bc4b8",
