@@ -27,11 +27,14 @@ func TestCreateWriteReadDeleteAwsS3Bucket(t *testing.T) {
 		assert.Equal(stack, ts[awsStackKey])
 		k := "test.txt"
 		v := "multiply, world!"
-		err = WriteToAwsS3Bucket(sess, bn, k, []byte(v), stack)
+		err = PutAwsS3Object(sess, bn, k, []byte(v), stack)
 		assert.NoError(err)
-		b, err := ReadFromAwsS3Bucket(sess, bn, k, stack)
+		b, err := GetAwsS3Object(sess, bn, k, stack)
 		assert.NoError(err)
 		assert.Equal(string(b), v)
+		err = DeleteAwsS3Object(sess, bn, k, stack)
+		_, err = GetAwsS3Object(sess, bn, k, stack)
+		assert.Error(err)
 		err = DeleteAwsS3Bucket(sess, bn, stack)
 		assert.NoError(err)
 		e, err = CheckAwsS3BucketExists(sess, bn, stack)

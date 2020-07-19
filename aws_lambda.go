@@ -58,7 +58,7 @@ func CreateAwsLambdaFunction(sess *session.Session, functionName string, functio
 		}
 	}
 	b := functionCodeZip.Bytes()
-	err = WriteToAwsS3Bucket(sess, bn, zn, b, stack)
+	err = PutAwsS3Object(sess, bn, zn, b, stack)
 	if err != nil {
 		return "", err
 	}

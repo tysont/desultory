@@ -121,6 +121,19 @@ func DeleteAwsStack(sess *session.Session, stack string) error {
 			if err != nil {
 				return nil
 			}
+		case "AWS::SQS::Queue":
+			qp, err := GetAwsSqsQueuePathFromArn(sess, arn)
+			if err != nil {
+				return nil
+			}
+			qn, err := GetAwsSqsQueueNameFromPath(qp, stack)
+			if err != nil {
+				return nil
+			}
+			err = DeleteAwsSqsQueue(sess, qn, stack)
+			if err != nil {
+				return nil
+			}
 		}
 	}
 	rs, err := ListAwsIamRoles(sess, stack)

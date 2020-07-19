@@ -21,7 +21,7 @@ func TestCreateSendReceiveDeleteAwsSqsQueue(t *testing.T) {
 		assert.NoError(err)
 		assert.Equal(len(ms), 1)
 		assert.Equal(m, ms[0])
-		err = DeleteAwsSqsQueue(sess, qn, stack)
-		assert.NoError(err)
+		//err = DeleteAwsSqsQueue(sess, qn, stack)
+		//assert.NoError(err)
 	}
 }

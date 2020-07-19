@@ -75,7 +75,7 @@ func CreateAwsS3Bucket(sess *session.Session, bucketName string, stack string) (
 	return arn, nil
 }
 
-func WriteToAwsS3Bucket(sess *session.Session, bucketName string, key string, value []byte, stack string) error {
+func PutAwsS3Object(sess *session.Session, bucketName string, key string, value []byte, stack string) error {
 	up := s3manager.NewUploader(sess)
 	bp, err := GetAwsS3BucketPath(bucketName, stack)
 	if err != nil {
@@ -89,7 +89,7 @@ func WriteToAwsS3Bucket(sess *session.Session, bucketName string, key string, va
 	return err
 }
 
-func ReadFromAwsS3Bucket(sess *session.Session, bucketName string, key string, stack string) ([]byte, error) {
+func GetAwsS3Object(sess *session.Session, bucketName string, key string, stack string) ([]byte, error) {
 	dn := s3manager.NewDownloader(sess)
 	bp, err := GetAwsS3BucketPath(bucketName, stack)
 	if err != nil {
@@ -101,6 +101,20 @@ func ReadFromAwsS3Bucket(sess *session.Session, bucketName string, key string, s
 		Key:    aws.String(key),
 	})
 	return b.Bytes(), err
+}
+
+func DeleteAwsS3Object(sess *session.Session, bucketName string, key string, stack string) error {
+	svc := s3.New(sess)
+	bp, err := GetAwsS3BucketPath(bucketName, stack)
+	if err != nil {
+		return err
+	}
+	dbi := &s3.DeleteObjectInput{
+		Bucket: aws.String(bp),
+		Key: aws.String(key),
+	}
+	_, err = svc.DeleteObject(dbi)
+	return err
 }
 
 func GetAwsS3BucketTags(sess *session.Session, bucketName string, stack string) (map[string]string, error) {

@@ -4,6 +4,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
+	"strings"
 )
 
 const AwsSqsQueuePrefix = "-queue"
@@ -14,6 +15,12 @@ func GetAwsSqsQueuePath(queueName string, stack string) (string, error) {
 
 func GetAwsSqsQueueNameFromPath(queueName string, stack string) (string, error) {
 	return GetAwsResourceNameFromPath(queueName, AwsSqsQueuePrefix, stack)
+}
+
+func GetAwsSqsQueuePathFromArn(sess *session.Session, queueArn string) (string, error) {
+	s := strings.Split(queueArn, ":")
+	fp := s[len(s) - 1]
+	return fp, nil
 }
 
 func CreateAwsSqsQueue(sess *session.Session, queueName string, stack string) (string, error) {

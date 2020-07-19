@@ -22,7 +22,7 @@ func CreateAwsResourceGroup(sess *session.Session, groupName string, tagName str
 	if err != nil {
 		return "", err
 	}
-	rs := []string {"AWS::ResourceGroups::Group", "AWS::Lambda::Function", "AWS::S3::Bucket", "AWS::DynamoDB::Table"}
+	rs := []string {"AWS::ResourceGroups::Group", "AWS::Lambda::Function", "AWS::S3::Bucket", "AWS::DynamoDB::Table", "AWS::SQS::Queue"}
 	rts := ""
 	for _, r := range rs {
 		if rts != "" {
