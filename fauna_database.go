@@ -1,6 +1,7 @@
 package desultory
 
 import (
+	"fmt"
 	f "github.com/fauna/faunadb-go/faunadb"
 )
 
@@ -22,10 +23,14 @@ func CreateFaunaDatabase(database string) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println(res)
 	var key string
 	res.At(f.ObjKey("secret")).Get(&key)
 	client := faunaRootClient.NewSessionClient(key)
 	faunaDatabaseClients[database] = client
+	var ref *f.RefV
+	res.At(f.ObjKey("ref")).Get(&ref)
+	faunaDatabaseKeyReferences[database] = ref
 	return nil
 }
 
@@ -38,6 +43,12 @@ func DeleteFaunaDatabase(database string) error {
 			f.Exists(f.Database(database)),
 			f.Delete(f.Database(database)),
 			false))
+	if err != nil {
+		return err
+	}
+	ref := faunaDatabaseKeyReferences[database]
+	_, err = faunaRootClient.Query(
+		f.Delete(ref))
 	if err != nil {
 		return err
 	}
@@ -108,3 +119,4 @@ func GetFaunaInstance(database string, index string, pkval string, o interface{}
 	}
 	return res.At(f.ObjKey("data")).Get(o)
 }
+
