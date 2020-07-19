@@ -1,12 +1,21 @@
 package desultory
 
-import f "github.com/fauna/faunadb-go/faunadb"
+import (
+	f "github.com/fauna/faunadb-go/faunadb"
+	"os"
+)
 
-var faunaRootAccessKey = "fnADxAKKZeACDXgY__82gfYHawD6S3sAiyeassqT"
+var faunaRootAccessKeyEnvironmentVariable = "FAUNA_ACCESS_KEY"
 var faunaRootClient *f.FaunaClient
 var faunaDatabaseClients map[string]*f.FaunaClient
 
 func initializeFauna() {
-	faunaRootClient = f.NewFaunaClient(faunaRootAccessKey)
+	k := getFaunaRootAccessKey()
+	faunaRootClient = f.NewFaunaClient(k)
 	faunaDatabaseClients = make(map[string]*f.FaunaClient, 0)
+}
+
+func getFaunaRootAccessKey() string {
+	k := os.Getenv(faunaRootAccessKeyEnvironmentVariable)
+	return k
 }

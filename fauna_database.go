@@ -1,7 +1,6 @@
 package desultory
 
 import (
-	"fmt"
 	f "github.com/fauna/faunadb-go/faunadb"
 )
 
@@ -104,7 +103,6 @@ func GetFaunaInstance(database string, index string, pkval string, o interface{}
 	res, err := client.Query(
 		f.Get(
 			f.MatchTerm(f.Index(index), pkval)))
-	fmt.Println(res)
 	if err != nil {
 		return err
 	}
